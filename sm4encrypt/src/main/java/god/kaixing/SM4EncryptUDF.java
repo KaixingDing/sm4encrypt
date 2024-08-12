@@ -1,3 +1,5 @@
+package god.kaixing;
+
 import org.apache.hadoop.hive.ql.exec.UDF;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -7,6 +9,7 @@ import javax.crypto.spec.SecretKeySpec;
 import java.security.SecureRandom;
 import java.security.Security;
 
+@SuppressWarnings("deprecation")
 public class SM4EncryptUDF extends UDF {
     // 在静态代码块中添加BouncyCastle安全提供者
     static {
@@ -33,6 +36,8 @@ public class SM4EncryptUDF extends UDF {
             // 将密钥转换为字节数组，并检查其长度是否至少为16字节
             byte[] keyByteArray = key.getBytes("UTF-8");
             if (keyByteArray.length < 16) {
+                System.out.println("Key length should be at least 16 bytes");
+                System.out.println("Key length: " + keyByteArray.length + ";" + key);
                 throw new IllegalArgumentException("Key length should be at least 16 bytes");
             }
             // 将密钥字节数组复制到keyBytes中
